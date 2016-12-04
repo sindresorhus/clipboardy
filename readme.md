@@ -50,7 +50,7 @@ Write (copy) to the clipboard synchronously.
 
 Type: `string`
 
-#### .read()
+#### .readSync()
 
 Read (paste) from the clipboard synchronously.
 
