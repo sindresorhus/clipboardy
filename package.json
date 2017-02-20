@@ -33,7 +33,7 @@
     "xsel"
   ],
   "dependencies": {
-    "execa": "^0.5.0"
+    "execa": "^0.6.0"
   },
   "devDependencies": {
     "ava": "*",

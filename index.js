@@ -51,20 +51,23 @@ exports.writeSync = input => {
 	}
 
 	const args = writeCmd();
-	const results = execa.sync(args.shift(), args, {input});
 
-	if (results.error) {
-		handler(results.error);
+	try {
+		execa.sync(args.shift(), args, {input});
+	} catch (err) {
+		handler(err);
 	}
 };
 
 exports.readSync = () => {
 	const args = readCmd();
-	const results = execa.sync(args.shift(), args);
+	let ret;
 
-	if (results.error) {
-		handler(results.error);
+	try {
+		ret = execa.sync(args.shift(), args).stdout;
+	} catch (err) {
+		handler(err);
 	}
 
-	return results.stdout;
+	return ret;
 };
