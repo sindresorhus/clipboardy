@@ -11,8 +11,6 @@ Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD.
 $ npm install --save clipboardy
 ```
 
-*Linux users will probably have to install [xsel](https://linux.die.net/man/1/xsel): `sudo apt install xsel`*
-
 
 ## Usage
 
