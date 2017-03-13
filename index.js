@@ -1,73 +1,90 @@
 'use strict';
 const execa = require('execa');
 
-const writeCmd = () => {
-	switch (process.platform) {
-		case 'darwin':
-			return ['pbcopy'];
-		case 'win32':
-			return ['clip'];
-		default:
-			return ['xsel', '--clipboard', '--input'];
-	}
-};
-
-const readCmd = () => {
-	switch (process.platform) {
-		case 'darwin':
-			return ['pbpaste'];
-		case 'win32':
-			return ['cscript', '/Nologo', '.\\fallbacks\\win-read.vbs'];
-		default:
-			return ['xsel', '--clipboard', '--output'];
-	}
-};
-
 const handler = err => {
-	if (err.code === 'ENOENT' && process.platform !== 'darwin' && process.platform !== 'win32') {
+	if (err.code === 'ENOENT') {
 		throw new Error('Couldn\'t find the required `xsel` binary. On Debian/Ubuntu you can install it with: sudo apt install xsel');
 	}
 
 	throw err;
 };
 
+const darwin = {
+	copy: opts => execa('pbcopy', [], opts),
+	paste: opts => execa.stdout('pbpaste', [], opts),
+	copySync: opts => execa.sync('pbcopy', [], opts),
+	pasteSync: opts => execa.sync('pbpaste', [], opts)
+};
+
+const win32 = {
+	copy: opts => execa('clip', [], opts),
+	paste: opts => execa.stdout('cscript', ['/Nologo', '.\\fallbacks\\win-read.vbs'], opts),
+	copySync: opts => execa.sync('clip', [], opts),
+	pasteSync: opts => execa.sync('cscript', ['/Nologo', '.\\fallbacks\\win-read.vbs'], opts)
+};
+
+const linux = {
+	copy: opts => {
+		return execa('./vendor/xsel', ['--clipboard', '--input'], opts)
+			.catch(() => execa('xsel', ['--clipboard', '--input'], opts))
+			.catch(handler);
+	},
+	paste: opts => {
+		return execa.stdout('./vendor/xsel', ['--clipboard', '--output'], opts)
+			.catch(() => execa.stdout('xsel', ['--clipboard', '--output'], opts))
+			.catch(handler);
+	},
+	copySync: opts => {
+		try {
+			return execa.sync('./vendor/xsel', ['--clipboard', '--input'], opts);
+		} catch (err) {
+			try {
+				return execa.sync('xsel', ['--clipboard', '--input'], opts);
+			} catch (err) {
+				handler(err);
+			}
+		}
+	},
+	pasteSync: opts => {
+		try {
+			return execa.sync('./vendor/xsel', ['--clipboard', '--output'], opts);
+		} catch (err) {
+			try {
+				return execa.sync('xsel', ['--clipboard', '--output'], opts);
+			} catch (err) {
+				handler(err);
+			}
+		}
+	}
+};
+
+function platform() {
+	switch (process.platform) {
+		case 'darwin':
+			return darwin;
+		case 'win32':
+			return win32;
+		default:
+			return linux;
+	}
+}
+
 exports.write = input => {
 	if (typeof input !== 'string') {
 		return Promise.reject(new TypeError(`Expected a string, got ${typeof input}`));
 	}
 
-	const args = writeCmd();
-	return execa(args.shift(), args, {input}).then(() => {}).catch(handler);
+	return platform().copy({input}).then(() => {});
 };
 
-exports.read = () => {
-	const args = readCmd();
-	return execa.stdout(args.shift(), args).catch(handler);
-};
+exports.read = () => platform().paste();
 
 exports.writeSync = input => {
 	if (typeof input !== 'string') {
 		throw new TypeError(`Expected a string, got ${typeof input}`);
 	}
 
-	const args = writeCmd();
-
-	try {
-		execa.sync(args.shift(), args, {input});
-	} catch (err) {
-		handler(err);
-	}
+	platform().copySync({input});
 };
 
-exports.readSync = () => {
-	const args = readCmd();
-	let ret;
-
-	try {
-		ret = execa.sync(args.shift(), args).stdout;
-	} catch (err) {
-		handler(err);
-	}
-
-	return ret;
-};
+exports.readSync = () => platform().pasteSync().stdout;
