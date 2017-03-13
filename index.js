@@ -1,6 +1,14 @@
 'use strict';
 const execa = require('execa');
 
+const handler = err => {
+	if (err.code === 'ENOENT') {
+		throw new Error('Couldn\'t find the required `xsel` binary. On Debian/Ubuntu you can install it with: sudo apt install xsel');
+	}
+
+	throw err;
+};
+
 const darwin = {
 	copy: opts => execa('pbcopy', [], opts),
 	paste: opts => execa.stdout('pbpaste', [], opts),
@@ -16,10 +24,38 @@ const win32 = {
 };
 
 const linux = {
-	copy: opts => execa('./vendor/xsel', ['--clipboard', '--input'], opts),
-	paste: opts => execa.stdout('./vendor/xsel', ['--clipboard', '--output'], opts),
-	copySync: opts => execa.sync('./vendor/xsel', ['--clipboard', '--input'], opts),
-	pasteSync: opts => execa.sync('./vendor/xsel', ['--clipboard', '--output'], opts)
+	copy: opts => {
+		return execa('./vendor/xsel', ['--clipboard', '--input'], opts)
+			.catch(() => execa('xsel', ['--clipboard', '--input'], opts))
+			.catch(handler);
+	},
+	paste: opts => {
+		return execa.stdout('./vendor/xsel', ['--clipboard', '--output'], opts)
+			.catch(() => execa.stdout('xsel', ['--clipboard', '--output'], opts))
+			.catch(handler);
+	},
+	copySync: opts => {
+		try {
+			return execa.sync('./vendor/xsel', ['--clipboard', '--input'], opts);
+		} catch (err) {
+			try {
+				return execa.sync('xsel', ['--clipboard', '--input'], opts);
+			} catch (err) {
+				handler(err);
+			}
+		}
+	},
+	pasteSync: opts => {
+		try {
+			return execa.sync('./vendor/xsel', ['--clipboard', '--output'], opts);
+		} catch (err) {
+			try {
+				return execa.sync('xsel', ['--clipboard', '--output'], opts);
+			} catch (err) {
+				handler(err);
+			}
+		}
+	}
 };
 
 function platform() {
