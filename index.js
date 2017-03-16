@@ -1,4 +1,5 @@
 'use strict';
+const path = require('path');
 const execa = require('execa');
 
 const handler = err => {
@@ -23,20 +24,21 @@ const win32 = {
 	pasteSync: opts => execa.sync('cscript', ['/Nologo', '.\\fallbacks\\win-read.vbs'], opts)
 };
 
+const xsel = path.join(__dirname, '/vendor/xsel');
 const linux = {
 	copy: opts => {
-		return execa('./vendor/xsel', ['--clipboard', '--input'], opts)
+		return execa(xsel, ['--clipboard', '--input'], opts)
 			.catch(() => execa('xsel', ['--clipboard', '--input'], opts))
 			.catch(handler);
 	},
 	paste: opts => {
-		return execa.stdout('./vendor/xsel', ['--clipboard', '--output'], opts)
+		return execa.stdout(xsel, ['--clipboard', '--output'], opts)
 			.catch(() => execa.stdout('xsel', ['--clipboard', '--output'], opts))
 			.catch(handler);
 	},
 	copySync: opts => {
 		try {
-			return execa.sync('./vendor/xsel', ['--clipboard', '--input'], opts);
+			return execa.sync(xsel, ['--clipboard', '--input'], opts);
 		} catch (err) {
 			try {
 				return execa.sync('xsel', ['--clipboard', '--input'], opts);
@@ -47,7 +49,7 @@ const linux = {
 	},
 	pasteSync: opts => {
 		try {
-			return execa.sync('./vendor/xsel', ['--clipboard', '--output'], opts);
+			return execa.sync(xsel, ['--clipboard', '--output'], opts);
 		} catch (err) {
 			try {
 				return execa.sync('xsel', ['--clipboard', '--output'], opts);
