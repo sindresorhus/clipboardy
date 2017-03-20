@@ -17,11 +17,13 @@ const darwin = {
 	pasteSync: opts => execa.sync('pbpaste', [], opts)
 };
 
+const winBinPath = path.join(__dirname, 'fallbacks/win-read.vbs');
+
 const win32 = {
 	copy: opts => execa('clip', [], opts),
-	paste: opts => execa.stdout('cscript', ['/Nologo', '.\\fallbacks\\win-read.vbs'], opts),
+	paste: opts => execa.stdout('cscript', ['/Nologo', winBinPath], opts),
 	copySync: opts => execa.sync('clip', [], opts),
-	pasteSync: opts => execa.sync('cscript', ['/Nologo', '.\\fallbacks\\win-read.vbs'], opts)
+	pasteSync: opts => execa.sync('cscript', ['/Nologo', winBinPath], opts)
 };
 
 const xsel = path.join(__dirname, 'vendor/xsel');
