@@ -1,6 +1,6 @@
 {
   "name": "clipboardy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Access the system clipboard (copy/paste)",
   "license": "MIT",
   "repository": "sindresorhus/clipboardy",
