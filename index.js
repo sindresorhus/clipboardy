@@ -1,10 +1,15 @@
 'use strict';
 const path = require('path');
 const execa = require('execa');
+const termux = require('./lib/termux.js');
 
 const handler = err => {
 	if (err.code === 'ENOENT') {
-		throw new Error('Couldn\'t find the required `xsel` binary. On Debian/Ubuntu you can install it with: sudo apt install xsel');
+		let message = 'Couldn\'t find the required `xsel` binary. On Debian/Ubuntu you can install it with: sudo apt install xsel';
+		if (err.path === 'termux-clipboard-get' || err.path === 'termux-clipboard-set') {
+			message = 'Couldn\'t find the termux-api scripts. You can install them with: apt install termux-api';
+		}
+		throw new Error(message);
 	}
 
 	throw err;
@@ -69,6 +74,11 @@ function platform() {
 			return darwin;
 		case 'win32':
 			return win32;
+		case 'android':
+			if (process.env.PREFIX !== '/data/data/com.termux/files/usr') {
+				throw new Error('You need to install Termux for this module to work on Android: https://termux.com');
+			}
+			return termux(handler);
 		default:
 			return linux;
 	}
