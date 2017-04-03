@@ -16,10 +16,10 @@ const handler = err => {
 };
 
 const darwin = {
-	copy: opts => execa('pbcopy', [], opts),
-	paste: opts => execa.stdout('pbpaste', [], opts),
-	copySync: opts => execa.sync('pbcopy', [], opts),
-	pasteSync: opts => execa.sync('pbpaste', [], opts)
+	copy: opts => execa('pbcopy', opts),
+	paste: opts => execa.stdout('pbpaste', opts),
+	copySync: opts => execa.sync('pbcopy', opts),
+	pasteSync: opts => execa.sync('pbpaste', opts)
 };
 
 const winBinPath = path.join(__dirname, 'fallbacks/win-read.vbs');
@@ -27,7 +27,7 @@ const winBinPath = path.join(__dirname, 'fallbacks/win-read.vbs');
 const win32 = {
 	copy: opts => execa('clip', [], opts),
 	paste: opts => execa.stdout('cscript', ['/Nologo', winBinPath], opts),
-	copySync: opts => execa.sync('clip', [], opts),
+	copySync: opts => execa.sync('clip', opts),
 	pasteSync: opts => execa.sync('cscript', ['/Nologo', winBinPath], opts)
 };
 

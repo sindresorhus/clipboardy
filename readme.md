@@ -2,7 +2,7 @@
 
 > Access the system clipboard (copy/paste)
 
-Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD.
+Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD, Android with [Termux](https://termux.com/).
 
 
 ## Install
