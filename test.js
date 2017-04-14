@@ -22,7 +22,7 @@ test('works with ascii', async t => {
 	t.is(await writeRead(f), f);
 });
 
-test('works with unicode', async t => {
+test.only('works with unicode', async t => {
 	const f = 'ĀāĂăĄąĆćĈĉĊċČčĎ ፰፱፲፳፴፵፶፷፸፹፺፻፼ æøå ±';
 	t.is(await writeRead(f), f);
 });
