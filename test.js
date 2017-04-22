@@ -27,6 +27,11 @@ test('works with unicode', async t => {
 	t.is(await writeRead(f), f);
 });
 
+test('works with unicode #2', async t => {
+	const f = '你好';
+	t.is(await writeRead(f), f);
+});
+
 test('works with emojis', async t => {
 	const f = '🦄❤️🤘🐑💩';
 	t.is(await writeRead(f), f);
