@@ -1,15 +1,15 @@
 'use strict';
 const termux = require('./lib/termux.js');
 const linux = require('./lib/linux.js');
-const darwin = require('./lib/darwin.js');
-const win32 = require('./lib/win32.js');
+const macos = require('./lib/macos.js');
+const windows = require('./lib/windows.js');
 
 function platform() {
 	switch (process.platform) {
 		case 'darwin':
-			return darwin;
+			return macos;
 		case 'win32':
-			return win32;
+			return windows;
 		case 'android':
 			if (process.env.PREFIX !== '/data/data/com.termux/files/usr') {
 				throw new Error('You need to install Termux for this module to work on Android: https://termux.com');
