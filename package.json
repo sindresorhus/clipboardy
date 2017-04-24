@@ -18,8 +18,7 @@
   "files": [
     "index.js",
     "lib",
-    "fallbacks",
-    "vendor"
+    "fallbacks"
   ],
   "keywords": [
     "clipboard",
