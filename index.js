@@ -22,13 +22,23 @@ const darwin = {
 	pasteSync: opts => execa.sync('pbpaste', opts)
 };
 
-const winBinPath = path.join(__dirname, 'fallbacks/win-read.vbs');
+// Binaries from: https://github.com/sindresorhus/win-clipboard
+const winReadBinPath = path.join(__dirname, 'fallbacks/win/paste.exe');
+const winWriteBinPath = path.join(__dirname, 'fallbacks/win/copy.exe');
 
 const win32 = {
-	copy: opts => execa('clip', [], opts),
-	paste: opts => execa.stdout('cscript', ['/Nologo', winBinPath], opts),
-	copySync: opts => execa.sync('clip', opts),
-	pasteSync: opts => execa.sync('cscript', ['/Nologo', winBinPath], opts)
+	copy: opts => {
+		const input = opts.input;
+		delete opts.input;
+		return execa(winWriteBinPath, [input], opts);
+	},
+	paste: opts => execa.stdout(winReadBinPath, opts),
+	copySync: opts => {
+		const input = opts.input;
+		delete opts.input;
+		return execa.sync(winWriteBinPath, [input], opts);
+	},
+	pasteSync: opts => execa.sync(winReadBinPath, opts)
 };
 
 const xsel = path.join(__dirname, 'vendor/xsel');
