@@ -36,3 +36,9 @@ test('works with emojis', async t => {
 	const f = '🦄❤️🤘🐑💩';
 	t.is(await writeRead(f), f);
 });
+
+test('EOL handling', t => {
+	const line = 'line \n line';
+	m.writeSync(line);
+	t.is(m.readSync(), line);
+});
