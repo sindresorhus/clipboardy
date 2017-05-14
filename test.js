@@ -37,7 +37,8 @@ test('works with emojis', async t => {
 	t.is(await writeRead(f), f);
 });
 
-test.failing('EOL handling', t => {
+const failingWin = process.platform === 'win32' ? test.failing : test;
+failingWin('EOL handling', t => {
 	const line = 'line \n line';
 	m.writeSync(line);
 	t.is(m.readSync(), line);
