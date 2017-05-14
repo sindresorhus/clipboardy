@@ -36,3 +36,9 @@ test('works with emojis', async t => {
 	const f = '🦄❤️🤘🐑💩';
 	t.is(await writeRead(f), f);
 });
+
+const failingWin = process.platform === 'win32' ? test.failing : test;
+failingWin('EOL handling', async t => {
+	const f = 'line \n line';
+	t.is(await writeRead(f), f);
+});
