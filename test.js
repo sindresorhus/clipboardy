@@ -1,3 +1,4 @@
+import {EOL} from 'os';
 import {serial as test} from 'ava';
 import m from './';
 
@@ -39,6 +40,6 @@ test('works with emojis', async t => {
 
 const failingWin = process.platform === 'win32' ? test.failing : test;
 failingWin('EOL handling', async t => {
-	const f = 'line \n line';
+	const f = `line ${EOL} line`;
 	t.is(await writeRead(f), f);
 });
