@@ -16,3 +16,7 @@ test_script:
   - node --version
   - npm --version
   - npm test
+  - ps: Get-Clipboard
+  - npm test
+deploy_script:
+  -ps: Get-Clipboard
