@@ -56,6 +56,7 @@ Read (paste) from the clipboard synchronously.
 ## Related
 
 - [clipboard-cli](https://github.com/sindresorhus/clipboard-cli) - CLI for this module
+- [copy-text-to-clipboard](https://github.com/sindresorhus/copy-text-to-clipboard) - Copy text to the clipboard in the browser
 
 
 ## License
