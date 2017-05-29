@@ -43,3 +43,8 @@ failingWin('EOL handling', async t => {
 	const f = `line ${EOL} line`;
 	t.is(await writeRead(f), f);
 });
+
+test('does not strips eof', async t => {
+	const f = 'somestring\n';
+	t.is(await writeRead(f), f);
+});
