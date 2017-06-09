@@ -28,7 +28,7 @@ exports.write = input => {
 	return platform().copy({input}).then(() => {});
 };
 
-exports.read = () => platform().paste();
+exports.read = () => platform().paste({stripEof: false});
 
 exports.writeSync = input => {
 	if (typeof input !== 'string') {
@@ -38,4 +38,4 @@ exports.writeSync = input => {
 	platform().copySync({input});
 };
 
-exports.readSync = () => platform().pasteSync().stdout;
+exports.readSync = () => platform().pasteSync({stripEof: false}).stdout;
