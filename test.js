@@ -1,6 +1,6 @@
 import {EOL} from 'os';
 import {serial as test} from 'ava';
-import m from './';
+import m from '.';
 
 const writeRead = async input => {
 	await m.write(input);

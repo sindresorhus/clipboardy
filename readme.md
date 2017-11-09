@@ -8,7 +8,7 @@ Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD, Android with 
 ## Install
 
 ```
-$ npm install --save clipboardy
+$ npm install clipboardy
 ```
 
 
