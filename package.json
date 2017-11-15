@@ -34,6 +34,7 @@
 		"xsel"
 	],
 	"dependencies": {
+		"arch": "^2.1.0",
 		"execa": "^0.8.0"
 	},
 	"devDependencies": {
