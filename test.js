@@ -7,6 +7,11 @@ const writeRead = async input => {
 	return m.read();
 };
 
+const writeReadSync = input => {
+	m.writeSync(input);
+	return m.readSync();
+};
+
 test('async', async t => {
 	const f = 'foo';
 	t.is(await writeRead(f), f);
@@ -14,8 +19,7 @@ test('async', async t => {
 
 test('sync', t => {
 	const f = 'foo';
-	m.writeSync(f);
-	t.is(m.readSync(), f);
+	t.is(writeReadSync(f), f);
 });
 
 test('works with ascii', async t => {
