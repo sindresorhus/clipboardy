@@ -2,7 +2,7 @@ os:
   - linux
   - osx
   - windows
-  language: node_js
+language: node_js
 node_js:
   - '10'
   - '8'
