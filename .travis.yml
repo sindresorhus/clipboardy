@@ -1,7 +1,8 @@
 os:
   - linux
   - osx
-language: node_js
+  - windows
+  language: node_js
 node_js:
   - '10'
   - '8'
