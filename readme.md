@@ -1,4 +1,4 @@
-# clipboardy [![Build Status: macOS & Linux](https://travis-ci.org/sindresorhus/clipboardy.svg?branch=master)](https://travis-ci.org/sindresorhus/clipboardy) [![Build status: Windows](https://ci.appveyor.com/api/projects/status/gflt3gjn1ia0a3vo/branch/master?svg=true)](https://ci.appveyor.com/project/sindresorhus/clipboardy/branch/master)
+# clipboardy [![Build Status](https://travis-ci.org/sindresorhus/clipboardy.svg?branch=master)](https://travis-ci.org/sindresorhus/clipboardy)
 
 > Access the system clipboard (copy/paste)
 
