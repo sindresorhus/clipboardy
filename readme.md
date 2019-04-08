@@ -28,25 +28,29 @@ clipboardy.readSync();
 
 ### clipboardy
 
-#### .write(input)
+#### .write(text)
 
 Write (copy) to the clipboard asynchronously. Returns a `Promise`.
 
-##### input
+##### text
 
 Type: `string`
+
+The text to write to the clipboard.
 
 #### .read()
 
 Read (paste) from the clipboard asynchronously. Returns a `Promise`.
 
-#### .writeSync(input)
+#### .writeSync(text)
 
 Write (copy) to the clipboard synchronously.
 
-##### input
+##### text
 
 Type: `string`
+
+The text to write to the clipboard.
 
 #### .readSync()
 
