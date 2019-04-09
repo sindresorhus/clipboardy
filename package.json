@@ -13,10 +13,11 @@
 		"node": ">=6"
 	},
 	"scripts": {
-		"test": "xo && ava"
+		"test": "xo && ava && tsd"
 	},
 	"files": [
 		"index.js",
+		"index.d.ts",
 		"lib",
 		"fallbacks"
 	],
@@ -34,11 +35,12 @@
 		"xsel"
 	],
 	"dependencies": {
-		"arch": "^2.1.0",
-		"execa": "^0.10.0"
+		"arch": "^2.1.1",
+		"execa": "^1.0.0"
 	},
 	"devDependencies": {
-		"ava": "*",
-		"xo": "*"
+		"ava": "^1.4.1",
+		"tsd": "^0.7.2",
+		"xo": "^0.24.0"
 	}
 }

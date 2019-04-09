@@ -1,15 +1,15 @@
 import {EOL} from 'os';
 import {serial as test} from 'ava';
-import m from '.';
+import clipboardy from '.';
 
 const writeRead = async input => {
-	await m.write(input);
-	return m.read();
+	await clipboardy.write(input);
+	return clipboardy.read();
 };
 
 const writeReadSync = input => {
-	m.writeSync(input);
-	return m.readSync();
+	clipboardy.writeSync(input);
+	return clipboardy.readSync();
 };
 
 test('async', async t => {

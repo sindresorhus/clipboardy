@@ -16,28 +16,29 @@ function getPlatformLib() {
 			if (process.env.PREFIX !== '/data/data/com.termux/files/usr') {
 				throw new Error('You need to install Termux for this module to work on Android: https://termux.com');
 			}
+
 			return termux;
 		default:
 			return linux;
 	}
 }
 
-exports.write = input => {
-	if (typeof input !== 'string') {
-		return Promise.reject(new TypeError(`Expected a string, got ${typeof input}`));
+exports.write = text => {
+	if (typeof text !== 'string') {
+		return Promise.reject(new TypeError(`Expected a string, got ${typeof text}`));
 	}
 
-	return platformLib.copy({input}).then(() => {});
+	return platformLib.copy({input: text}).then(() => {});
 };
 
 exports.read = () => platformLib.paste({stripEof: false});
 
-exports.writeSync = input => {
-	if (typeof input !== 'string') {
-		throw new TypeError(`Expected a string, got ${typeof input}`);
+exports.writeSync = text => {
+	if (typeof text !== 'string') {
+		throw new TypeError(`Expected a string, got ${typeof text}`);
 	}
 
-	platformLib.copySync({input});
+	platformLib.copySync({input: text});
 };
 
 exports.readSync = () => platformLib.pasteSync({stripEof: false}).stdout;
