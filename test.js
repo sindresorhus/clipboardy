@@ -13,41 +13,41 @@ const writeReadSync = input => {
 };
 
 test('async', async t => {
-	const f = 'foo';
-	t.is(await writeRead(f), f);
+	const fixture = 'foo';
+	t.is(await writeRead(fixture), fixture);
 });
 
 test('sync', t => {
-	const f = 'foo';
-	t.is(writeReadSync(f), f);
+	const fixture = 'foo';
+	t.is(writeReadSync(fixture), fixture);
 });
 
 test('works with ascii', async t => {
-	const f = '123456789abcdefghijklmnopqrstuvwxyz+-=&_[]<^=>=/{:})-{(`)}';
-	t.is(await writeRead(f), f);
+	const fixture = '123456789abcdefghijklmnopqrstuvwxyz+-=&_[]<^=>=/{:})-{(`)}';
+	t.is(await writeRead(fixture), fixture);
 });
 
 test('works with unicode', async t => {
-	const f = 'ĀāĂăĄąĆćĈĉĊċČčĎ ፰፱፲፳፴፵፶፷፸፹፺፻፼ æøå ±';
-	t.is(await writeRead(f), f);
+	const fixture = 'ĀāĂăĄąĆćĈĉĊċČčĎ ፰፱፲፳፴፵፶፷፸፹፺፻፼ æøå ±';
+	t.is(await writeRead(fixture), fixture);
 });
 
 test('works with unicode #2', async t => {
-	const f = '你好';
-	t.is(await writeRead(f), f);
+	const fixture = '你好';
+	t.is(await writeRead(fixture), fixture);
 });
 
 test('works with emojis', async t => {
-	const f = '🦄❤️🤘🐑💩';
-	t.is(await writeRead(f), f);
+	const fixture = '🦄❤️🤘🐑💩';
+	t.is(await writeRead(fixture), fixture);
 });
 
 test('EOL handling', async t => {
-	const f = `line ${EOL} line`;
-	t.is(await writeRead(f), f);
+	const fixture = `line ${EOL} line`;
+	t.is(await writeRead(fixture), fixture);
 });
 
 test('does not strips eof', async t => {
-	const f = `somestring${EOL}`;
-	t.is(await writeRead(f), f);
+	const fixture = `somestring${EOL}`;
+	t.is(await writeRead(fixture), fixture);
 });

@@ -4,9 +4,7 @@ const linux = require('./lib/linux.js');
 const macos = require('./lib/macos.js');
 const windows = require('./lib/windows.js');
 
-const platformLib = getPlatformLib();
-
-function getPlatformLib() {
+const platformLib = (() => {
 	switch (process.platform) {
 		case 'darwin':
 			return macos;
@@ -21,17 +19,17 @@ function getPlatformLib() {
 		default:
 			return linux;
 	}
-}
+})();
 
-exports.write = text => {
+exports.write = async text => {
 	if (typeof text !== 'string') {
-		return Promise.reject(new TypeError(`Expected a string, got ${typeof text}`));
+		throw new TypeError(`Expected a string, got ${typeof text}`);
 	}
 
-	return platformLib.copy({input: text}).then(() => {});
+	await platformLib.copy({input: text});
 };
 
-exports.read = () => platformLib.paste({stripEof: false});
+exports.read = async () => platformLib.paste({stripEof: false});
 
 exports.writeSync = text => {
 	if (typeof text !== 'string') {
