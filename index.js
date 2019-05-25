@@ -1,4 +1,5 @@
 'use strict';
+const fs = require('fs');
 const termux = require('./lib/termux.js');
 const linux = require('./lib/linux.js');
 const macos = require('./lib/macos.js');
@@ -17,7 +18,8 @@ const platformLib = (() => {
 
 			return termux;
 		default:
-			return linux;
+			const isWSL = /(Microsoft|WSL)/.test(fs.readFileSync('/proc/version'));
+			return isWSL ? windows : linux;
 	}
 })();
 
