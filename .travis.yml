@@ -2,10 +2,12 @@ os:
   - linux
   - osx
   - windows
+dist: xenial
+services:
+  - xvfb
 language: node_js
 node_js:
   - '10'
   - '8'
 before_script:
   - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; fi'
-  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi'
