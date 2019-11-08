@@ -57,6 +57,13 @@ The text to write to the clipboard.
 Read (paste) from the clipboard synchronously.
 
 
+## FAQ
+
+#### Where can I find the source of the bundled binaries?
+
+The [Linux binary](https://github.com/sindresorhus/clipboardy/blob/master/fallbacks/linux/xsel) is just a bundled version of [`xsel`](https://linux.die.net/man/1/xsel). The source for the [Windows binary](https://github.com/sindresorhus/clipboardy/blob/master/fallbacks/windows/clipboard_x86_64.exe) can be found [here](https://github.com/sindresorhus/win-clipboard).
+
+
 ## Related
 
 - [clipboard-cli](https://github.com/sindresorhus/clipboard-cli) - CLI for this module
