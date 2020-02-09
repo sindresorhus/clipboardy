@@ -1,7 +1,6 @@
-
 import {EOL} from 'os';
-import clipboardy from '.';
 import {serial as test} from 'ava';
+import clipboardy from '.';
 
 const writeRead = async input => {
 	await clipboardy.write(input);
