@@ -1,4 +1,5 @@
 'use strict';
+const isWSL = require('is-wsl');
 const termux = require('./lib/termux.js');
 const linux = require('./lib/linux.js');
 const macos = require('./lib/macos.js');
@@ -17,6 +18,11 @@ const platformLib = (() => {
 
 			return termux;
 		default:
+			// `process.platform === 'linux'` for WSL.
+			if (isWSL) {
+				return windows;
+			}
+
 			return linux;
 	}
 })();

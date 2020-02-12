@@ -36,7 +36,8 @@
 	],
 	"dependencies": {
 		"arch": "^2.1.1",
-		"execa": "^1.0.0"
+		"execa": "^1.0.0",
+		"is-wsl": "^2.1.1"
 	},
 	"devDependencies": {
 		"ava": "^2.1.0",
