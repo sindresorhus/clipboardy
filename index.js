@@ -18,7 +18,7 @@ const platformLib = (() => {
 
 			return termux;
 		default:
-			// Process.platform is "linux" for WSL
+			// `process.platform === 'linux'` for WSL.
 			if (isWSL) {
 				return windows;
 			}
