@@ -51,5 +51,16 @@
 			"browser": "./browser.js",
 			"default": "./index.js"
 		}
+	},
+	"xo": {
+		"overrides": [
+			{
+				"files": "browser.js",
+				"env": [
+					"node",
+					"browser"
+				]
+			}
+		]
 	}
 }
