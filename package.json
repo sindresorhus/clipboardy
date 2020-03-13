@@ -45,5 +45,11 @@
 		"tsd": "^0.10.0",
 		"xo": "^0.25.3"
 	},
-	"browser": "browser.js"
+	"browser": "browser.js",
+	"exports": {
+		".": {
+			"browser": "./browser.js",
+			"default": "./index.js"
+		}
+	}
 }
