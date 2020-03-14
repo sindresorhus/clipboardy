@@ -1,3 +1,5 @@
+/* eslint-globals navigator */
+
 'use strict';
 
 exports.write = async text => {
