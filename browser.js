@@ -11,9 +11,9 @@ exports.read = async () => {
 };
 
 exports.readSync = () => {
-	throw new Error('readSync not supported in browsers!');
+	throw new Error('.readSync() not supported in browsers!');
 };
 
 exports.writeSync = () => {
-	throw new Error('writeSync not supported in browsers!');
+	throw new Error('.writeSync() not supported in browsers!');
 };
