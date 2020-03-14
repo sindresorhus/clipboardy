@@ -47,10 +47,8 @@
 	},
 	"browser": "browser.js",
 	"exports": {
-		".": {
-			"browser": "./browser.js",
-			"default": "./index.js"
-		}
+		"browser": "./browser.js",
+		"default": "./index.js"
 	},
 	"xo": {
 		"overrides": [
