@@ -1,16 +1,16 @@
 /* eslint-globals navigator */
 'use strict';
 
-exports.write = async text => {
+export const write = async text => {
 	await navigator.clipboard.writeText(text);
 };
 
-exports.read = async () => navigator.clipboard.readText();
+export const read = async () => navigator.clipboard.readText();
 
-exports.readSync = () => {
+export const readSync = () => {
 	throw new Error('`.readSync()` is not supported in browsers!');
 };
 
-exports.writeSync = () => {
+export const writeSync = () => {
 	throw new Error('`.writeSync()` is not supported in browsers!');
 };
