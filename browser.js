@@ -1,4 +1,4 @@
-/* eslint-globals navigator */
+/* eslint-env browser */
 'use strict';
 
 export const write = async text => {
