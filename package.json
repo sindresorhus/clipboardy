@@ -43,7 +43,7 @@
 	"devDependencies": {
 		"ava": "^2.1.0",
 		"tsd": "^0.10.0",
-		"xo": "^0.25.3"
+		"xo": "^0.26.1"
 	},
 	"browser": "browser.js",
 	"exports": {
