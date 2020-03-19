@@ -2,15 +2,13 @@
 
 > Access the system clipboard (copy/paste)
 
-Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD, Android with [Termux](https://termux.com/).
-
+Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD, Android with [Termux](https://termux.com/), [modern browsers](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API#Browser_compatibility).
 
 ## Install
 
 ```
 $ npm install clipboardy
 ```
-
 
 ## Usage
 
@@ -22,7 +20,6 @@ clipboardy.writeSync('🦄');
 clipboardy.readSync();
 //=> '🦄'
 ```
-
 
 ## API
 
@@ -46,6 +43,8 @@ Read (paste) from the clipboard asynchronously. Returns a `Promise`.
 
 Write (copy) to the clipboard synchronously.
 
+Doesn't work in browsers.
+
 ##### text
 
 Type: `string`
@@ -56,13 +55,13 @@ The text to write to the clipboard.
 
 Read (paste) from the clipboard synchronously.
 
+Doesn't work in browsers.
 
 ## FAQ
 
 #### Where can I find the source of the bundled binaries?
 
 The [Linux binary](https://github.com/sindresorhus/clipboardy/blob/master/fallbacks/linux/xsel) is just a bundled version of [`xsel`](https://linux.die.net/man/1/xsel). The source for the [Windows binary](https://github.com/sindresorhus/clipboardy/blob/master/fallbacks/windows/clipboard_x86_64.exe) can be found [here](https://github.com/sindresorhus/win-clipboard).
-
 
 ## Related
 
