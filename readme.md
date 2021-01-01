@@ -1,4 +1,4 @@
-# clipboardy [![Build Status](https://travis-ci.org/sindresorhus/clipboardy.svg?branch=master)](https://travis-ci.org/sindresorhus/clipboardy)
+# clipboardy
 
 > Access the system clipboard (copy/paste)
 
