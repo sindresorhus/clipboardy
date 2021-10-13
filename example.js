@@ -1,5 +1,6 @@
-'use strict';
-const clipboardy = require('.');
+import clipboard from './index.js';
 
-clipboardy.write('你好🦄');
-clipboardy.read().then(console.log);
+(async () => {
+	clipboard.write('你好🦄');
+	console.log(await clipboard.read());
+})();

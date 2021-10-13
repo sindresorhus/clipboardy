@@ -4,13 +4,19 @@
 	"description": "Access the system clipboard (copy/paste)",
 	"license": "MIT",
 	"repository": "sindresorhus/clipboardy",
+	"funding": "https://github.com/sponsors/sindresorhus",
 	"author": {
 		"name": "Sindre Sorhus",
 		"email": "sindresorhus@gmail.com",
-		"url": "sindresorhus.com"
+		"url": "https://sindresorhus.com"
+	},
+	"type": "module",
+	"exports": {
+		"node": "./index.js",
+		"default": "./browser.js"
 	},
 	"engines": {
-		"node": ">=8"
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
 	},
 	"scripts": {
 		"test": "xo && ava && tsd"
@@ -36,18 +42,16 @@
 		"xsel"
 	],
 	"dependencies": {
-		"arch": "^2.1.1",
-		"execa": "^1.0.0",
-		"is-wsl": "^2.1.1"
+		"arch": "^2.2.0",
+		"execa": "^5.1.1",
+		"is-wsl": "^2.2.0"
 	},
 	"devDependencies": {
-		"ava": "^2.1.0",
-		"tsd": "^0.10.0",
-		"xo": "^0.25.3"
+		"ava": "^3.15.0",
+		"tsd": "^0.18.0",
+		"xo": "^0.45.0"
 	},
-	"browser": "browser.js",
-	"exports": {
-		"browser": "./browser.js",
-		"default": "./index.js"
+	"ava": {
+		"serial": true
 	}
 }

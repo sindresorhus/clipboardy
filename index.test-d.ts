@@ -1,7 +1,7 @@
 import {expectType} from 'tsd';
-import * as clipboardy from '.';
+import clipboard from './index.js';
 
-clipboardy.writeSync('🦄');
-expectType<Promise<void>>(clipboardy.write('🦄'));
-expectType<string>(clipboardy.readSync());
-expectType<Promise<string>>(clipboardy.read());
+clipboard.writeSync('🦄');
+expectType<Promise<void>>(clipboard.write('🦄'));
+expectType<string>(clipboard.readSync());
+expectType<Promise<string>>(clipboard.read());

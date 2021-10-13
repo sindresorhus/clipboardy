@@ -1,9 +1,9 @@
-'use strict';
-const isWSL = require('is-wsl');
-const termux = require('./lib/termux.js');
-const linux = require('./lib/linux.js');
-const macos = require('./lib/macos.js');
-const windows = require('./lib/windows.js');
+import process from 'node:process';
+import isWSL from 'is-wsl';
+import termux from './lib/termux.js';
+import linux from './lib/linux.js';
+import macos from './lib/macos.js';
+import windows from './lib/windows.js';
 
 const platformLib = (() => {
 	switch (process.platform) {
@@ -27,7 +27,9 @@ const platformLib = (() => {
 	}
 })();
 
-exports.write = async text => {
+const clipboard = {};
+
+clipboard.write = async text => {
 	if (typeof text !== 'string') {
 		throw new TypeError(`Expected a string, got ${typeof text}`);
 	}
@@ -35,9 +37,9 @@ exports.write = async text => {
 	await platformLib.copy({input: text});
 };
 
-exports.read = async () => platformLib.paste({stripEof: false});
+clipboard.read = async () => platformLib.paste({stripFinalNewline: false});
 
-exports.writeSync = text => {
+clipboard.writeSync = text => {
 	if (typeof text !== 'string') {
 		throw new TypeError(`Expected a string, got ${typeof text}`);
 	}
@@ -45,4 +47,6 @@ exports.writeSync = text => {
 	platformLib.copySync({input: text});
 };
 
-exports.readSync = () => platformLib.pasteSync({stripEof: false}).stdout;
+clipboard.readSync = () => platformLib.pasteSync({stripFinalNewline: false});
+
+export default clipboard;

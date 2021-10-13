@@ -1,37 +1,71 @@
-/**
-Write (copy) to the clipboard asynchronously.
+declare const clipboard: {
+	/**
+	Write (copy) to the clipboard asynchronously.
 
-@param text - The text to write to the clipboard.
-*/
-export function write(text: string): Promise<void>;
+	@param text - The text to write to the clipboard.
 
-/**
-Write (copy) to the clipboard synchronously.
+	@example
+	```
+	import clipboard from 'clipboardy';
 
-Doesn't work in browsers.
+	await clipboard.write('🦄');
 
-@param text - The text to write to the clipboard.
+	await clipboard.read();
+	//=> '🦄'
+	```
+	*/
+	write(text: string): Promise<void>;
 
-@example
-```
-import * as clipboardy from 'clipboardy';
+	/**
+	Read (paste) from the clipboard asynchronously.
 
-clipboardy.writeSync('🦄');
+	@example
+	```
+	import clipboard from 'clipboardy';
 
-clipboardy.readSync();
-//=> '🦄'
-```
-*/
-export function writeSync(text: string): void;
+	await clipboard.write('🦄');
 
-/**
-Read (paste) from the clipboard asynchronously.
-*/
-export function read(): Promise<string>;
+	await clipboard.read();
+	//=> '🦄'
+	```
+	*/
+	read(): Promise<string>;
 
-/**
-Read (paste) from the clipboard synchronously.
+	/**
+	Write (copy) to the clipboard synchronously.
 
-Doesn't work in browsers.
-*/
-export function readSync(): string;
+	__Doesn't work in browsers.__
+
+	@param text - The text to write to the clipboard.
+
+	@example
+	```
+	import clipboard from 'clipboardy';
+
+	clipboard.writeSync('🦄');
+
+	clipboard.readSync();
+	//=> '🦄'
+	```
+	*/
+	writeSync(text: string): void;
+
+	/**
+	Read (paste) from the clipboard synchronously.
+
+	__Doesn't work in browsers.__
+
+	@example
+	```
+	import clipboard from 'clipboardy';
+
+	clipboard.writeSync('🦄');
+
+	clipboard.readSync();
+	//=> '🦄'
+	```
+	*/
+	readSync(): string;
+};
+
+export default clipboard;

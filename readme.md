@@ -6,28 +6,30 @@ Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD, Android with 
 
 ## Install
 
-```
-$ npm install clipboardy
+```sh
+npm install clipboardy
 ```
 
 ## Usage
 
 ```js
-const clipboardy = require('clipboardy');
+import clipboard from 'clipboardy';
 
-clipboardy.writeSync('🦄');
+clipboard.writeSync('🦄');
 
-clipboardy.readSync();
+clipboard.readSync();
 //=> '🦄'
 ```
 
 ## API
 
-### clipboardy
+### clipboard
 
 #### .write(text)
 
-Write (copy) to the clipboard asynchronously. Returns a `Promise`.
+Write (copy) to the clipboard asynchronously.
+
+Returns a `Promise`.
 
 ##### text
 
@@ -37,13 +39,15 @@ The text to write to the clipboard.
 
 #### .read()
 
-Read (paste) from the clipboard asynchronously. Returns a `Promise`.
+Read (paste) from the clipboard asynchronously.
+
+Returns a `Promise`.
 
 #### .writeSync(text)
 
 Write (copy) to the clipboard synchronously.
 
-Doesn't work in browsers.
+**Doesn't work in browsers.**
 
 ##### text
 
@@ -55,7 +59,7 @@ The text to write to the clipboard.
 
 Read (paste) from the clipboard synchronously.
 
-Doesn't work in browsers.
+**Doesn't work in browsers.**
 
 ## FAQ
 

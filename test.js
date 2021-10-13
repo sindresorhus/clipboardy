@@ -1,15 +1,15 @@
-import {EOL} from 'os';
-import {serial as test} from 'ava';
-import clipboardy from '.';
+import {EOL} from 'node:os';
+import test from 'ava';
+import clipboard from './index.js';
 
 const writeRead = async input => {
-	await clipboardy.write(input);
-	return clipboardy.read();
+	await clipboard.write(input);
+	return clipboard.read();
 };
 
 const writeReadSync = input => {
-	clipboardy.writeSync(input);
-	return clipboardy.readSync();
+	clipboard.writeSync(input);
+	return clipboard.readSync();
 };
 
 test('async', async t => {

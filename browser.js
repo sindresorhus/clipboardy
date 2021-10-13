@@ -1,16 +1,19 @@
 /* eslint-env browser */
-'use strict';
 
-export const write = async text => {
+const clipboard = {};
+
+clipboard.write = async text => {
 	await navigator.clipboard.writeText(text);
 };
 
-export const read = async () => navigator.clipboard.readText();
+clipboard.read = async () => navigator.clipboard.readText();
 
-export const readSync = () => {
+clipboard.readSync = () => {
 	throw new Error('`.readSync()` is not supported in browsers!');
 };
 
-export const writeSync = () => {
+clipboard.writeSync = () => {
 	throw new Error('`.writeSync()` is not supported in browsers!');
 };
+
+export default clipboard;
