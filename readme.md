@@ -23,6 +23,8 @@ clipboard.readSync();
 
 ## API
 
+In the browser, it requires a [secure context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts).
+
 ### clipboard
 
 #### .write(text)
