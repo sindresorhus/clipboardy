@@ -12,12 +12,14 @@
 	},
 	"type": "module",
 	"exports": {
+		"types": "./index.d.ts",
 		"node": "./index.js",
 		"default": "./browser.js"
 	},
 	"engines": {
-		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+		"node": ">=18"
 	},
+	"sideEffects": false,
 	"scripts": {
 		"test": "xo && ava && tsd"
 	},
@@ -42,14 +44,14 @@
 		"xsel"
 	],
 	"dependencies": {
-		"arch": "^2.2.0",
-		"execa": "^5.1.1",
-		"is-wsl": "^2.2.0"
+		"execa": "^8.0.1",
+		"is-wsl": "^3.1.0",
+		"is64bit": "^2.0.0"
 	},
 	"devDependencies": {
-		"ava": "^3.15.0",
-		"tsd": "^0.18.0",
-		"xo": "^0.45.0"
+		"ava": "^5.3.1",
+		"tsd": "^0.29.0",
+		"xo": "^0.56.0"
 	},
 	"ava": {
 		"serial": true

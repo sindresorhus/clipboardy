@@ -7,23 +7,30 @@ import windows from './lib/windows.js';
 
 const platformLib = (() => {
 	switch (process.platform) {
-		case 'darwin':
+		case 'darwin': {
 			return macos;
-		case 'win32':
+		}
+
+		case 'win32': {
 			return windows;
-		case 'android':
+		}
+
+		case 'android': {
 			if (process.env.PREFIX !== '/data/data/com.termux/files/usr') {
 				throw new Error('You need to install Termux for this module to work on Android: https://termux.com');
 			}
 
 			return termux;
-		default:
+		}
+
+		default: {
 			// `process.platform === 'linux'` for WSL.
 			if (isWSL) {
 				return windows;
 			}
 
 			return linux;
+		}
 	}
 })();
 
