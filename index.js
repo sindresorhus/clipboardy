@@ -4,6 +4,7 @@ import termux from './lib/termux.js';
 import linux from './lib/linux.js';
 import macos from './lib/macos.js';
 import windows from './lib/windows.js';
+import {setFallbacksRoot} from './lib/fallbacks.js';
 
 const platformLib = (() => {
 	switch (process.platform) {
@@ -55,5 +56,7 @@ clipboard.writeSync = text => {
 };
 
 clipboard.readSync = () => platformLib.pasteSync({stripFinalNewline: false});
+
+clipboard.configure = ({fallbacksRoot}) => setFallbacksRoot(fallbacksRoot);
 
 export default clipboard;
