@@ -63,6 +63,16 @@ Read (paste) from the clipboard synchronously.
 
 **Doesn't work in browsers.**
 
+#### .configure(options)
+
+Configure the root directory for fallback binaries.
+
+This is useful for bundlers or packagers (e.g. Node.js SEA) who need to control where `clipboardy` looks for fallback binaries like `xsel` or Windows executables.
+
+##### options
+
+- `fallbacksRoot` (string) The directory path where fallback binaries are located.
+
 ## FAQ
 
 #### Where can I find the source of the bundled binaries?
