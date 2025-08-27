@@ -72,4 +72,5 @@ The [Linux binary](fallbacks/linux/xsel) is just a bundled version of [`xsel`](h
 ## Related
 
 - [clipboard-cli](https://github.com/sindresorhus/clipboard-cli) - CLI for this module
+- [clipboard-image](https://github.com/sindresorhus/clipboard-image) - Get and set images on the clipboard
 - [copy-text-to-clipboard](https://github.com/sindresorhus/copy-text-to-clipboard) - Copy text to the clipboard in the browser
