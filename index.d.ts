@@ -66,6 +66,24 @@ declare const clipboard: {
 	```
 	*/
 	readSync(): string;
+
+	/**
+	Configure the root directory for fallback binaries.
+	This is useful for bundlers or packagers (e.g. Node.js SEA) who need
+	to control where `clipboardy` looks for fallback binaries like `xsel` or
+	Windows executables.
+
+	@example
+	```
+	import clipboard from 'clipboardy';
+
+	// Tell clipboardy to load fallbacks from a custom directory
+	clipboard.configure({fallbacksRoot: '/path/to/fallbacks'});
+	```
+
+	@param options.fallbacksRoot The directory path where fallback binaries are located.
+	*/
+	configure(options: {fallbacksRoot: string}): void;
 };
 
 export default clipboard;
