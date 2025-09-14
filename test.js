@@ -51,3 +51,48 @@ test('does not strips eof', async t => {
 	const fixture = `somestring${EOL}`;
 	t.is(await writeRead(fixture), fixture);
 });
+
+test('works with empty string', async t => {
+	const fixture = '';
+	t.is(await writeRead(fixture), fixture);
+});
+
+test('works with empty string (sync)', t => {
+	const fixture = '';
+	t.is(writeReadSync(fixture), fixture);
+});
+
+test('works with long strings', async t => {
+	const fixture = 'x'.repeat(10_000);
+	t.is(await writeRead(fixture), fixture);
+});
+
+test('works with tabs and special whitespace', async t => {
+	const fixture = 'foo\tbar\nbaz\r\nqux';
+	t.is(await writeRead(fixture), fixture);
+});
+
+test('works with tabs and special whitespace (sync)', t => {
+	const fixture = 'foo\tbar\nbaz\r\nqux';
+	t.is(writeReadSync(fixture), fixture);
+});
+
+test('works with unicode (sync)', t => {
+	const fixture = 'ĀāĂăĄąĆćĈĉĊċČčĎ ፰፱፲፳፴፵፶፷፸፹፺፻፼ æøå ±';
+	t.is(writeReadSync(fixture), fixture);
+});
+
+test('works with emojis (sync)', t => {
+	const fixture = '🦄❤️🤘🐑💩';
+	t.is(writeReadSync(fixture), fixture);
+});
+
+test('preserves leading and trailing spaces', async t => {
+	const fixture = '  foo bar  ';
+	t.is(await writeRead(fixture), fixture);
+});
+
+test('preserves leading and trailing spaces (sync)', t => {
+	const fixture = '  foo bar  ';
+	t.is(writeReadSync(fixture), fixture);
+});

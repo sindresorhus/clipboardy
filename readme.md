@@ -69,6 +69,8 @@ Read (paste) from the clipboard synchronously.
 
 The [Linux binary](fallbacks/linux/xsel) is just a bundled version of [`xsel`](https://linux.die.net/man/1/xsel). The source for the [Windows binary](fallbacks/windows/clipboard_x86_64.exe) can be found [here](https://github.com/sindresorhus/win-clipboard).
 
+On Windows, clipboardy first tries the native PowerShell cmdlets (`Set-Clipboard`/`Get-Clipboard`) and falls back to the bundled binary if PowerShell is unavailable or restricted.
+
 ## Related
 
 - [clipboard-cli](https://github.com/sindresorhus/clipboard-cli) - CLI for this module
