@@ -1,7 +1,9 @@
 import process from 'node:process';
 import isWSL from 'is-wsl';
+import isWayland from 'is-wayland';
 import termux from './lib/termux.js';
 import linux from './lib/linux.js';
+import wayland from './lib/wayland.js';
 import macos from './lib/macos.js';
 import windows from './lib/windows.js';
 
@@ -29,31 +31,40 @@ const platformLib = (() => {
 				return windows;
 			}
 
+			// Check for Wayland session on Linux
+			if (isWayland()) {
+				return wayland;
+			}
+
 			return linux;
 		}
 	}
 })();
 
-const clipboard = {};
+const clipboard = {
+	async write(text) {
+		if (typeof text !== 'string') {
+			throw new TypeError(`Expected a string, got ${typeof text}`);
+		}
 
-clipboard.write = async text => {
-	if (typeof text !== 'string') {
-		throw new TypeError(`Expected a string, got ${typeof text}`);
-	}
+		await platformLib.copy({input: text});
+	},
 
-	await platformLib.copy({input: text});
+	async read() {
+		return platformLib.paste({stripFinalNewline: false});
+	},
+
+	writeSync(text) {
+		if (typeof text !== 'string') {
+			throw new TypeError(`Expected a string, got ${typeof text}`);
+		}
+
+		platformLib.copySync({input: text});
+	},
+
+	readSync() {
+		return platformLib.pasteSync({stripFinalNewline: false});
+	},
 };
-
-clipboard.read = async () => platformLib.paste({stripFinalNewline: false});
-
-clipboard.writeSync = text => {
-	if (typeof text !== 'string') {
-		throw new TypeError(`Expected a string, got ${typeof text}`);
-	}
-
-	platformLib.copySync({input: text});
-};
-
-clipboard.readSync = () => platformLib.pasteSync({stripFinalNewline: false});
 
 export default clipboard;

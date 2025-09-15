@@ -20,7 +20,6 @@
 	"engines": {
 		"node": ">=18"
 	},
-	"sideEffects": false,
 	"scripts": {
 		"test": "xo && ava && tsd"
 	},
@@ -46,6 +45,7 @@
 	],
 	"dependencies": {
 		"execa": "^8.0.1",
+		"is-wayland": "^0.1.0",
 		"is-wsl": "^3.1.0",
 		"is64bit": "^2.0.0"
 	},

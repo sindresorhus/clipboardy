@@ -9,9 +9,6 @@ declare const clipboard: {
 	import clipboard from 'clipboardy';
 
 	await clipboard.write('🦄');
-
-	await clipboard.read();
-	//=> '🦄'
 	```
 	*/
 	write(text: string): Promise<void>;
@@ -23,9 +20,7 @@ declare const clipboard: {
 	```
 	import clipboard from 'clipboardy';
 
-	await clipboard.write('🦄');
-
-	await clipboard.read();
+	const content = await clipboard.read();
 	//=> '🦄'
 	```
 	*/
@@ -43,9 +38,6 @@ declare const clipboard: {
 	import clipboard from 'clipboardy';
 
 	clipboard.writeSync('🦄');
-
-	clipboard.readSync();
-	//=> '🦄'
 	```
 	*/
 	writeSync(text: string): void;
@@ -59,9 +51,7 @@ declare const clipboard: {
 	```
 	import clipboard from 'clipboardy';
 
-	clipboard.writeSync('🦄');
-
-	clipboard.readSync();
+	const content = clipboard.readSync();
 	//=> '🦄'
 	```
 	*/

@@ -2,7 +2,7 @@
 
 > Access the system clipboard (copy/paste)
 
-Cross-platform. Supports: macOS, Windows, Linux, OpenBSD, FreeBSD, Android with [Termux](https://termux.com/), and [modern browsers](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API#Browser_compatibility).
+Cross-platform. Supports: macOS, Windows, Linux (including Wayland), OpenBSD, FreeBSD, Android with [Termux](https://termux.com/), and [modern browsers](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API#Browser_compatibility).
 
 ## Install
 
@@ -15,6 +15,12 @@ npm install clipboardy
 ```js
 import clipboard from 'clipboardy';
 
+await clipboard.write('🦄');
+
+await clipboard.read();
+//=> '🦄'
+
+// Or use the synchronous API
 clipboard.writeSync('🦄');
 
 clipboard.readSync();
@@ -23,7 +29,7 @@ clipboard.readSync();
 
 ## API
 
-In the browser, it requires a [secure context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts).
+**Browser usage:** Requires a [secure context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts) (HTTPS). Synchronous methods are not available in browsers.
 
 ### clipboard
 
@@ -31,7 +37,7 @@ In the browser, it requires a [secure context](https://developer.mozilla.org/en-
 
 Write (copy) to the clipboard asynchronously.
 
-Returns a `Promise`.
+Returns a `Promise<void>`.
 
 ##### text
 
@@ -39,11 +45,20 @@ Type: `string`
 
 The text to write to the clipboard.
 
+```js
+await clipboard.write('🦄');
+```
+
 #### .read()
 
 Read (paste) from the clipboard asynchronously.
 
-Returns a `Promise`.
+Returns a `Promise<string>`.
+
+```js
+const content = await clipboard.read();
+//=> '🦄'
+```
 
 #### .writeSync(text)
 
@@ -57,11 +72,22 @@ Type: `string`
 
 The text to write to the clipboard.
 
+```js
+clipboard.writeSync('🦄');
+```
+
 #### .readSync()
 
 Read (paste) from the clipboard synchronously.
 
+Returns a `string`.
+
 **Doesn't work in browsers.**
+
+```js
+const content = clipboard.readSync();
+//=> '🦄'
+```
 
 ## FAQ
 
@@ -70,6 +96,10 @@ Read (paste) from the clipboard synchronously.
 The [Linux binary](fallbacks/linux/xsel) is just a bundled version of [`xsel`](https://linux.die.net/man/1/xsel). The source for the [Windows binary](fallbacks/windows/clipboard_x86_64.exe) can be found [here](https://github.com/sindresorhus/win-clipboard).
 
 On Windows, clipboardy first tries the native PowerShell cmdlets (`Set-Clipboard`/`Get-Clipboard`) and falls back to the bundled binary if PowerShell is unavailable or restricted.
+
+#### Does this work on Wayland?
+
+Yes. On Linux, clipboardy automatically detects Wayland sessions and uses [`wl-clipboard`](https://github.com/bugaevc/wl-clipboard) when available. If not, it gracefully falls back to X11 tools. Also works with WSLg (Windows Subsystem for Linux GUI). Install `wl-clipboard` using your distribution's package manager.
 
 ## Related
 

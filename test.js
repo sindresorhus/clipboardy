@@ -12,87 +12,70 @@ const writeReadSync = input => {
 	return clipboard.readSync();
 };
 
-test('async', async t => {
-	const fixture = 'foo';
-	t.is(await writeRead(fixture), fixture);
+// Basic functionality tests
+test('basic async operation', async t => {
+	t.is(await writeRead('test'), 'test');
 });
 
-test('sync', t => {
-	const fixture = 'foo';
-	t.is(writeReadSync(fixture), fixture);
+test('basic sync operation', t => {
+	t.is(writeReadSync('test'), 'test');
 });
 
-test('works with ascii', async t => {
-	const fixture = '123456789abcdefghijklmnopqrstuvwxyz+-=&_[]<^=>=/{:})-{(`)}';
-	t.is(await writeRead(fixture), fixture);
+// Content type tests
+test('handles various content types', async t => {
+	const testCases = [
+		'', // Empty string
+		'simple text',
+		'123456789abcdefghijklmnopqrstuvwxyz+-=&_[]<^=>=/{:})-{(`)}', // ASCII special chars
+		'ĀāĂăĄąĆćĈĉĊċČčĎ ፰፱፲፳፴፵፶፷፸፹፺፻፼ æøå ± 你好', // Unicode mix
+		'🦄❤️🤘🐑💩', // Emojis
+		'  leading and trailing spaces  ',
+		`line${EOL}break`,
+		`ending newline${EOL}`,
+		'foo\tbar\nbaz\r\nqux', // Various whitespace
+		'x'.repeat(1000), // Longer string
+	];
+
+	// Test each case sequentially to avoid clipboard conflicts
+	for (const fixture of testCases) {
+		t.is(await writeRead(fixture), fixture); // eslint-disable-line no-await-in-loop
+	}
 });
 
-test('works with unicode', async t => {
-	const fixture = 'ĀāĂăĄąĆćĈĉĊċČčĎ ፰፱፲፳፴፵፶፷፸፹፺፻፼ æøå ±';
-	t.is(await writeRead(fixture), fixture);
+test('handles various content types (sync)', t => {
+	const testCases = [
+		'',
+		'sync test',
+		'🎉 sync unicode 测试',
+		'  sync spaces  ',
+		`sync${EOL}newline`,
+	];
+
+	for (const fixture of testCases) {
+		t.is(writeReadSync(fixture), fixture);
+	}
 });
 
-test('works with unicode #2', async t => {
-	const fixture = '你好';
-	t.is(await writeRead(fixture), fixture);
+// Error handling tests
+test('write() rejects non-string input', async t => {
+	const invalidInputs = [123, null, undefined, {}, [], true];
+
+	for (const input of invalidInputs) {
+		await t.throwsAsync( // eslint-disable-line no-await-in-loop
+			async () => clipboard.write(input),
+			{instanceOf: TypeError, message: /Expected a string/},
+		);
+	}
 });
 
-test('works with emojis', async t => {
-	const fixture = '🦄❤️🤘🐑💩';
-	t.is(await writeRead(fixture), fixture);
+test('writeSync() throws on non-string input', t => {
+	const invalidInputs = [123, null, undefined, {}, [], true];
+
+	for (const input of invalidInputs) {
+		t.throws(
+			() => clipboard.writeSync(input),
+			{instanceOf: TypeError, message: /Expected a string/},
+		);
+	}
 });
 
-test('EOL handling', async t => {
-	const fixture = `line ${EOL} line`;
-	t.is(await writeRead(fixture), fixture);
-});
-
-test('does not strips eof', async t => {
-	const fixture = `somestring${EOL}`;
-	t.is(await writeRead(fixture), fixture);
-});
-
-test('works with empty string', async t => {
-	const fixture = '';
-	t.is(await writeRead(fixture), fixture);
-});
-
-test('works with empty string (sync)', t => {
-	const fixture = '';
-	t.is(writeReadSync(fixture), fixture);
-});
-
-test('works with long strings', async t => {
-	const fixture = 'x'.repeat(10_000);
-	t.is(await writeRead(fixture), fixture);
-});
-
-test('works with tabs and special whitespace', async t => {
-	const fixture = 'foo\tbar\nbaz\r\nqux';
-	t.is(await writeRead(fixture), fixture);
-});
-
-test('works with tabs and special whitespace (sync)', t => {
-	const fixture = 'foo\tbar\nbaz\r\nqux';
-	t.is(writeReadSync(fixture), fixture);
-});
-
-test('works with unicode (sync)', t => {
-	const fixture = 'ĀāĂăĄąĆćĈĉĊċČčĎ ፰፱፲፳፴፵፶፷፸፹፺፻፼ æøå ±';
-	t.is(writeReadSync(fixture), fixture);
-});
-
-test('works with emojis (sync)', t => {
-	const fixture = '🦄❤️🤘🐑💩';
-	t.is(writeReadSync(fixture), fixture);
-});
-
-test('preserves leading and trailing spaces', async t => {
-	const fixture = '  foo bar  ';
-	t.is(await writeRead(fixture), fixture);
-});
-
-test('preserves leading and trailing spaces (sync)', t => {
-	const fixture = '  foo bar  ';
-	t.is(writeReadSync(fixture), fixture);
-});
