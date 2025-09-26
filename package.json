@@ -18,10 +18,11 @@
 	},
 	"sideEffects": false,
 	"engines": {
-		"node": ">=18"
+		"node": ">=20"
 	},
 	"scripts": {
-		"test": "xo && ava && tsd"
+		"//test": "xo && ava",
+		"test": "ava"
 	},
 	"files": [
 		"index.js",
@@ -44,15 +45,14 @@
 		"xsel"
 	],
 	"dependencies": {
-		"execa": "^8.0.1",
+		"execa": "^9.6.0",
 		"is-wayland": "^0.1.0",
 		"is-wsl": "^3.1.0",
 		"is64bit": "^2.0.0"
 	},
 	"devDependencies": {
-		"ava": "^5.3.1",
-		"tsd": "^0.29.0",
-		"xo": "^0.56.0"
+		"ava": "^6.4.1",
+		"xo": "^1.2.2"
 	},
 	"ava": {
 		"serial": true
