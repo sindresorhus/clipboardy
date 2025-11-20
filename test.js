@@ -78,4 +78,3 @@ test('writeSync() throws on non-string input', t => {
 		);
 	}
 });
-
