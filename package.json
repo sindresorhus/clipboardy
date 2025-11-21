@@ -45,10 +45,11 @@
 		"xsel"
 	],
 	"dependencies": {
-		"execa": "^9.6.0",
+		"execa": "^9.6.1",
 		"is-wayland": "^0.1.0",
 		"is-wsl": "^3.1.0",
-		"is64bit": "^2.0.0"
+		"is64bit": "^2.0.0",
+		"powershell-utils": "^0.2.0"
 	},
 	"devDependencies": {
 		"ava": "^6.4.1",
