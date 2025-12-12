@@ -18,7 +18,7 @@ const platformLib = (() => {
 		}
 
 		case 'android': {
-			if (process.env.TERMUX__PREFIX === undefined) {
+			if (process.env.TERMUX_VERSION === undefined) {
 				throw new Error('You need to install Termux for this module to work on Android: https://termux.com');
 			}
 
