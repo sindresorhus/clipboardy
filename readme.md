@@ -91,6 +91,10 @@ const content = clipboard.readSync();
 
 ## FAQ
 
+#### Does this work in headless Linux environments?
+
+No. Clipboard operations on Linux require a display server (X11 or Wayland). Headless environments like CI servers or Raspberry Pi without a desktop environment do not have a system clipboard.
+
 #### Where can I find the source of the bundled binaries?
 
 The [Linux binary](fallbacks/linux/xsel) is just a bundled version of [`xsel`](https://linux.die.net/man/1/xsel). The source for the [Windows binary](fallbacks/windows/clipboard_x86_64.exe) can be found [here](https://github.com/sindresorhus/win-clipboard).
