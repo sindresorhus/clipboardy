@@ -45,6 +45,7 @@
 		"xsel"
 	],
 	"dependencies": {
+		"clipboard-image": "^0.1.0",
 		"execa": "^9.6.1",
 		"is-wayland": "^0.1.0",
 		"is-wsl": "^3.1.0",

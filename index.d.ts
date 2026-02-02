@@ -56,6 +56,52 @@ declare const clipboard: {
 	```
 	*/
 	readSync(): string;
+
+	/**
+	Write (copy) images to the clipboard asynchronously.
+
+	Only supported on macOS. On other platforms, this is a no-op.
+
+	@param filePaths - The file paths of the images to write to the clipboard. Supports any image type that macOS supports, including PNG, JPEG, HEIC, WebP, and GIF.
+
+	@example
+	```
+	import clipboard from 'clipboardy';
+
+	await clipboard.writeImages(['/path/to/image.png']);
+	```
+	*/
+	writeImages(filePaths: string[]): Promise<void>;
+
+	/**
+	Read images from the clipboard asynchronously.
+
+	Only supported on macOS. On other platforms, this returns an empty array.
+
+	Returns file paths to temporary PNG files. You are responsible for cleaning up the files.
+
+	@example
+	```
+	import clipboard from 'clipboardy';
+
+	const filePaths = await clipboard.readImages();
+	```
+	*/
+	readImages(): Promise<string[]>;
+
+	/**
+	Check if the clipboard contains images.
+
+	Only supported on macOS. On other platforms, this returns `false`.
+
+	@example
+	```
+	import clipboard from 'clipboardy';
+
+	const hasImages = await clipboard.hasImages();
+	```
+	*/
+	hasImages(): Promise<boolean>;
 };
 
 export default clipboard;

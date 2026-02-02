@@ -1,6 +1,7 @@
 import process from 'node:process';
 import isWSL from 'is-wsl';
 import isWayland from 'is-wayland';
+import {writeClipboardImages, readClipboardImages, hasClipboardImages} from 'clipboard-image';
 import termux from './lib/termux.js';
 import linux from './lib/linux.js';
 import wayland from './lib/wayland.js';
@@ -65,6 +66,22 @@ const clipboard = {
 
 	readSync() {
 		return platformLib.pasteSync({stripFinalNewline: false});
+	},
+
+	async writeImages(filePaths) {
+		if (!Array.isArray(filePaths)) {
+			throw new TypeError(`Expected an array, got ${typeof filePaths}`);
+		}
+
+		await writeClipboardImages(filePaths);
+	},
+
+	async readImages() {
+		return readClipboardImages();
+	},
+
+	async hasImages() {
+		return hasClipboardImages();
 	},
 };
 

@@ -16,4 +16,14 @@ clipboard.writeSync = () => {
 	throw new Error('`.writeSync()` is not supported in browsers!');
 };
 
+clipboard.writeImages = async filePaths => {
+	if (!Array.isArray(filePaths)) {
+		throw new TypeError(`Expected an array, got ${typeof filePaths}`);
+	}
+};
+
+clipboard.readImages = async () => [];
+
+clipboard.hasImages = async () => false;
+
 export default clipboard;

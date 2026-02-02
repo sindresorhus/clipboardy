@@ -89,6 +89,48 @@ const content = clipboard.readSync();
 //=> '🦄'
 ```
 
+#### .writeImages(filePaths)
+
+Write (copy) images to the clipboard asynchronously.
+
+Returns a `Promise<void>`.
+
+**Only supported on macOS.** On other platforms, this is a no-op.
+
+##### filePaths
+
+Type: `string[]`
+
+The file paths of the images to write to the clipboard. Supports any image type that macOS supports, including PNG, JPEG, HEIC, WebP, and GIF.
+
+```js
+await clipboard.writeImages(['/path/to/image.png']);
+```
+
+#### .readImages()
+
+Read images from the clipboard asynchronously.
+
+Returns a `Promise<string[]>` with file paths to temporary PNG files. You are responsible for cleaning up the files.
+
+**Only supported on macOS.** On other platforms, this returns an empty array.
+
+```js
+const filePaths = await clipboard.readImages();
+```
+
+#### .hasImages()
+
+Check if the clipboard contains images.
+
+Returns a `Promise<boolean>`.
+
+**Only supported on macOS.** On other platforms, this returns `false`.
+
+```js
+const hasImages = await clipboard.hasImages();
+```
+
 ## FAQ
 
 #### Does this work in headless Linux environments?
