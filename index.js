@@ -6,6 +6,7 @@ import linux from './lib/linux.js';
 import wayland from './lib/wayland.js';
 import macos from './lib/macos.js';
 import windows from './lib/windows.js';
+import wsl from './lib/wsl.js';
 
 const platformLib = (() => {
 	switch (process.platform) {
@@ -28,7 +29,7 @@ const platformLib = (() => {
 		default: {
 			// `process.platform === 'linux'` for WSL.
 			if (isWSL) {
-				return windows;
+				return wsl;
 			}
 
 			// Check for Wayland session on Linux
