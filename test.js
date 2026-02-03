@@ -3,8 +3,8 @@ import process from 'node:process';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'ava';
-import clipboard from './index.js';
 import browserClipboard from './browser.js';
+import clipboard from './index.js';
 
 const writeRead = async input => {
 	await clipboard.write(input);
@@ -58,6 +58,23 @@ test('handles various content types (sync)', t => {
 	for (const fixture of testCases) {
 		t.is(writeReadSync(fixture), fixture);
 	}
+});
+
+if (process.platform === 'win32') {
+	test('preserves newlines from stdin on Windows', async t => {
+		const input = 'line one\nline two\n';
+		t.is(await writeRead(input), input);
+	});
+}
+
+// Large input test (reproduces https://github.com/sindresorhus/clipboard-cli/issues/9)
+test('handles large multiline input', async t => {
+	const line = 'I am a pink elephant. Do not think about me';
+	const lineCount = 5000;
+	const input = Array.from({length: lineCount}, () => line).join('\n');
+
+	const output = await writeRead(input);
+	t.is(output, input);
 });
 
 // Error handling tests
