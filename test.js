@@ -1,9 +1,10 @@
-import {EOL} from 'node:os';
+import {EOL, tmpdir} from 'node:os';
 import process from 'node:process';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'ava';
 import browserClipboard from './browser.js';
+import wayland from './lib/wayland.js';
 import clipboard from './index.js';
 
 const writeRead = async input => {
@@ -64,6 +65,91 @@ if (process.platform === 'win32') {
 	test('preserves newlines from stdin on Windows', async t => {
 		const input = 'line one\nline two\n';
 		t.is(await writeRead(input), input);
+	});
+}
+
+const countTemporaryFiles = () => fs.readdirSync(tmpdir()).filter(name => name.startsWith('clipboardy-')).length;
+
+if (process.platform !== 'win32') {
+	const createFakeWlCopyEnvironment = () => {
+		const temporaryDirectory = fs.mkdtempSync(path.join(import.meta.dirname, '.ai-temporary-'));
+		const fakeWlCopyPath = path.join(temporaryDirectory, 'wl-copy');
+		const backgroundProcessIdPath = path.join(temporaryDirectory, 'background-process-id');
+		fs.writeFileSync(fakeWlCopyPath, '#!/bin/sh\nsleep 5 &\necho $! > "$FAKE_WL_COPY_PID_FILE"\nexit 0\n', {mode: 0o755});
+
+		return {
+			temporaryDirectory,
+			cleanup() {
+				try {
+					const backgroundProcessId = Number(fs.readFileSync(backgroundProcessIdPath, 'utf8'));
+					if (backgroundProcessId > 0) {
+						process.kill(backgroundProcessId);
+					}
+				} catch {}
+
+				fs.rmSync(temporaryDirectory, {recursive: true});
+			},
+			environment: {
+				...process.env,
+				PATH: `${temporaryDirectory}${path.delimiter}${process.env.PATH}`,
+				FAKE_WL_COPY_PID_FILE: backgroundProcessIdPath,
+			},
+		};
+	};
+
+	test('Wayland write() does not wait for the clipboard to be taken over', async t => {
+		const {cleanup, environment} = createFakeWlCopyEnvironment();
+
+		try {
+			const before = countTemporaryFiles();
+			const start = performance.now();
+			await wayland.copy({input: 'no hang', env: environment});
+			t.true(performance.now() - start < 2000);
+			t.is(countTemporaryFiles(), before);
+		} finally {
+			cleanup();
+		}
+	});
+
+	test('Wayland writeSync() does not wait for the clipboard to be taken over', t => {
+		const {cleanup, environment} = createFakeWlCopyEnvironment();
+
+		try {
+			const before = countTemporaryFiles();
+			const start = performance.now();
+			wayland.copySync({input: 'no hang', env: environment});
+			t.true(performance.now() - start < 2000);
+			t.is(countTemporaryFiles(), before);
+		} finally {
+			cleanup();
+		}
+	});
+}
+
+if (process.platform === 'linux') {
+	// On Wayland, `wl-copy` keeps serving the clipboard in a background process, which must not keep us waiting nor leave its stderr file behind (https://github.com/sindresorhus/clipboardy/issues/111)
+	test('write() does not wait for the clipboard to be taken over', async t => {
+		const start = performance.now();
+		await clipboard.write('no hang');
+		t.true(performance.now() - start < 2000);
+	});
+
+	test('writeSync() does not wait for the clipboard to be taken over', t => {
+		const start = performance.now();
+		clipboard.writeSync('no hang');
+		t.true(performance.now() - start < 2000);
+	});
+
+	test('write() does not leave temporary files behind', async t => {
+		const before = countTemporaryFiles();
+		await clipboard.write('no leftovers');
+		t.is(countTemporaryFiles(), before);
+	});
+
+	test('writeSync() does not leave temporary files behind', t => {
+		const before = countTemporaryFiles();
+		clipboard.writeSync('no leftovers');
+		t.is(countTemporaryFiles(), before);
 	});
 }
 
